@@ -58,7 +58,9 @@ build:
 		rsync -a --delete --exclude=.git --exclude=android/ $(TOPDIR)/ $(call build-dir,$(ABI))/ && \
 		cd $(call build-dir,$(ABI)) && \
 		export LIBS='-ltinfow' && \
+		vim_cv_bcopy_handles_overlap=yes \
 		vim_cv_getcwd_broken=no \
+		vim_cv_memcpy_handles_overlap=yes \
 		vim_cv_memmove_handles_overlap=yes \
 		vim_cv_stat_ignores_slash=yes \
 		vim_cv_terminfo=yes \
@@ -68,6 +70,8 @@ build:
 			--host=$$TARGET \
 			--disable-nls \
 			--with-tlib=ncurses \
+			--enable-gui=no \
+			--disable-darwin \
 			&& \
 		$(MAKE) -j && \
 		$(MAKE) install && \
